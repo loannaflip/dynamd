@@ -3319,6 +3319,10 @@ void updatesizehints(Client *c) {
 
 
 void updatestatus() {
+    if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
+        strcpy(stext, "dynamd");
+    }
+
     drawbar(selmon);
 }
 
