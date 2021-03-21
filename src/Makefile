@@ -1,0 +1,68 @@
+define LICENSE
+MIT/X Consortium License
+
+© 2006-2019 Anselm R Garbe <anselm@garbe.ca>
+© 2006-2009 Jukka Salmi <jukka at salmi dot ch>
+© 2006-2007 Sander van Dijk <a dot h dot vandijk at gmail dot com>
+© 2007-2011 Peter Hartlich <sgkkr at hartlich dot com>
+© 2007-2009 Szabolcs Nagy <nszabolcs at gmail dot com>
+© 2007-2009 Christof Musik <christof at sendfax dot de>
+© 2007-2009 Premysl Hruby <dfenze at gmail dot com>
+© 2007-2008 Enno Gottox Boland <gottox at s01 dot de>
+© 2008 Martin Hurton <martin dot hurton at gmail dot com>
+© 2008 Neale Pickett <neale dot woozle dot org>
+© 2009 Mate Nagy <mnagy at port70 dot net>
+© 2010-2016 Hiltjo Posthuma <hiltjo@codemadness.org>
+© 2010-2012 Connor Lane Smith <cls@lubutu.com>
+© 2011 Christoph Lohmann <20h@r-36.net>
+© 2015-2016 Quentin Rameau <quinq@fifth.space>
+© 2015-2016 Eric Pruitt <eric.pruitt@gmail.com>
+© 2016-2017 Markus Teich <markus.teich@stusta.mhn.de>
+© 2020-2021 Angel Uniminin <uniminin@zoho.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+endef
+
+# Flags
+CFLAGS   = -std=c11 -pedantic -Wall -march=skylake -mtune=skylake -Wno-deprecated-declarations -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=4 -fuse-linker-plugin -pipe -falign-functions=32 -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=2 -DXINERAMA
+LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb -lxcb-res -Wl,-O3 -Wl,--as-needed
+
+.PHONY: all
+
+SRC = drw.c dynamd.c util.c
+OBJ = drw.o dynamd.o util.o
+
+all: dynamd
+
+.c.o:
+	@ cc -c ${CFLAGS} $<
+
+${OBJ}: config.h
+
+dynamd: ${OBJ}
+	@ cc -o $@ ${OBJ} ${LDFLAGS}
+
+install: all uninstall
+	@ cp -f dynamd /usr/local/bin/
+	@ cp -f dynamd.desktop /usr/share/xsessions/
+	@ chmod 755 /usr/local/bin/dynamd
+	@ rm -f dynamd ${OBJ}
+
+uninstall:
+	@ rm -f /usr/local/bin/dynamd /usr/share/xsessions/dynamd.desktop

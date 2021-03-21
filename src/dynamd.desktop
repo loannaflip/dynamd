@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=dynamd
+GenericName=Dynamd Window Manager
+Comment=Dynamd Window Manager
+Keywords=dynamd;window manager;
+TryExec=dynamd
+Exec=dynamd
+Icon=dynamd
+Type=XSession
