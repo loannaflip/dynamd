@@ -40,7 +40,6 @@ DEALINGS IN THE SOFTWARE.
 */
 
 
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 
 #include <stdio.h>
 #include <stdlib.h>

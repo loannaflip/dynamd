@@ -40,6 +40,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 
+
 typedef struct {
     Cursor cursor;
 } Cur;

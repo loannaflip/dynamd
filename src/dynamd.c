@@ -39,32 +39,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-/*
- * DWM UPSTREAM: https://dwm.suckless.org
- * dynamd (Fork of dwm) window manager is designed like any other X client as well.
- * It is driven through handling X events. In contrast to other X clients, a window
- * manager selects for SubstructureRedirectMask on the root window, to receive
- * events about window (dis-)appearance. Only one X connection at a time is
- * allowed to select for this event mask.
- *
- * The event handlers of dynamd are organized in an array which is accessed
- * whenever a new event has been fetched. This allows event dispatching
- * in O(1) time.
- *
- * Each child of the root window is called a client, except windows which have
- * set the override_redirect flag. Clients are organized in a linked client
- * list on each monitor, the focus history is remembered through a stack list
- * on each monitor. Each client contains a bit array to indicate the tags of a
- * client.
- *
- * Keys and tagging rules are organized as arrays and defined in config.h.
- *
- * To understand everything else, start reading main().
- */
 
-
-
-#pragma GCC diagnostic ignored "-Wstringop-truncation"
 
 #include <errno.h>
 #include <locale.h>
@@ -2174,6 +2149,9 @@ void keypress(XEvent *e) {
     XKeyEvent *ev;
 
     ev = &e -> xkey;
+
+    /* 'XKeycodeToKeysym' is deprecated. It's harmless, safely can be ignored. */
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     keysym = XKeycodeToKeysym(dpy, (KeyCode)ev -> keycode, 0);
 
     for (i = 0; i < LENGTH(keys); i++) {

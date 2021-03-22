@@ -40,6 +40,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 
+
 /* Appearance */
 static const char *fonts[]          = { "MonoLisa:size=15" };
 static const char *colors[][3]      = {

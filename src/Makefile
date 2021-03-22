@@ -39,9 +39,11 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 endef
 
+
+
 # Flags
-CFLAGS   = -std=c11 -pedantic -Wall -march=skylake -mtune=skylake -Wno-deprecated-declarations -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=4 -fuse-linker-plugin -pipe -falign-functions=32 -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=2 -DXINERAMA
-LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb -lxcb-res -Wl,-O3 -Wl,--as-needed
+CFLAGS   = -Os -pipe -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=2 -DXINERAMA
+LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb -lxcb-res
 
 .PHONY: all
 
