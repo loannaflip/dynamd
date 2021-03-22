@@ -127,7 +127,7 @@ static Key keys[] = {
 
     /* Move Windows */
     { SUPER|SHIFT,              XK_Right,   movestack,      {.i = +1 } },
-	{ SUPER|SHIFT,              XK_Left,    movestack,      {.i = -1 } },
+    { SUPER|SHIFT,              XK_Left,    movestack,      {.i = -1 } },
 
     /* Resize Windows */
     { SUPER|CTRL,               XK_Right,   setmfact,       { .f = +0.05 } },

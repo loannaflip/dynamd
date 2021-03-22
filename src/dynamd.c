@@ -1223,12 +1223,12 @@ void attachstack(Client *c) {
 
 
 void attachbottom(Client *c) {
-	Client **tc;
-	c -> next = NULL;
+    Client **tc;
+    c -> next = NULL;
 
-	for (tc = &c -> mon -> clients; *tc; tc = &(*tc) -> next);
+    for (tc = &c -> mon -> clients; *tc; tc = &(*tc) -> next);
 
-	*tc = c;
+    *tc = c;
 }
 
 
@@ -1944,65 +1944,65 @@ void focusstack(const Arg *arg) {
 
 
 void movestack(const Arg *arg) {
-	Client *c = NULL, *p = NULL, *pc = NULL, *i;
+    Client *c = NULL, *p = NULL, *pc = NULL, *i;
 
-	if (arg -> i > 0) {
-		/* find the client after selmon -> sel */
-		for (c = selmon -> sel -> next; c && (!ISVISIBLE(c) || c -> isfloating); c = c -> next);
+    if (arg -> i > 0) {
+        /* find the client after selmon -> sel */
+        for (c = selmon -> sel -> next; c && (!ISVISIBLE(c) || c -> isfloating); c = c -> next);
 
-		if (!c) {
+        if (!c) {
             for (c = selmon -> clients; c && (!ISVISIBLE(c) || c -> isfloating); c = c -> next);
         }
 
-	} else {
-		/* find the client before selmon->sel */
-		for (i = selmon -> clients; i != selmon -> sel; i = i -> next) {
+    } else {
+        /* find the client before selmon->sel */
+        for (i = selmon -> clients; i != selmon -> sel; i = i -> next) {
             if (ISVISIBLE(i) && !i -> isfloating) {
                 c = i;
             }
         }
-		if (!c) {
+        if (!c) {
             for (; i; i = i -> next) {
                 if (ISVISIBLE(i) && !i -> isfloating) {
                     c = i;
                 }
             }
         }
-	}
+    }
 
-	/* find the client before selmon->sel and c */
-	for (i = selmon -> clients; i && (!p || !pc); i = i -> next) {
-		if (i -> next == selmon -> sel) {
+    /* find the client before selmon->sel and c */
+    for (i = selmon -> clients; i && (!p || !pc); i = i -> next) {
+        if (i -> next == selmon -> sel) {
             p = i;
         }
 
-		if (i -> next == c) {
+        if (i -> next == c) {
             pc = i;
         }
-	}
+    }
 
-	/* swap c and selmon->sel selmon->clients in the selmon->clients list */
-	if (c && c != selmon -> sel) {
-		Client *temp = selmon -> sel -> next == c ? selmon -> sel : selmon -> sel -> next;
-		selmon -> sel -> next = c -> next == selmon -> sel ? c : c -> next;
-		c -> next = temp;
+    /* swap c and selmon->sel selmon->clients in the selmon->clients list */
+    if (c && c != selmon -> sel) {
+        Client *temp = selmon -> sel -> next == c ? selmon -> sel : selmon -> sel -> next;
+        selmon -> sel -> next = c -> next == selmon -> sel ? c : c -> next;
+        c -> next = temp;
 
-		if (p && p != c) {
+        if (p && p != c) {
             p -> next = c;
         }
 
-		if (pc && pc != selmon -> sel) {
+        if (pc && pc != selmon -> sel) {
             pc -> next = selmon -> sel;
         }
 
-		if(selmon -> sel == selmon -> clients) {
+        if(selmon -> sel == selmon -> clients) {
             selmon -> clients = c;
         } else if (c == selmon -> clients) {
             selmon -> clients = selmon -> sel;
         }
 
-		arrange(selmon);
-	}
+        arrange(selmon);
+    }
 }
 
 
@@ -2473,39 +2473,39 @@ Monitor *recttomon(int x, int y, int w, int h) {
 
 
 void organizetags(const Arg *arg) {
-	Client *c;
-	unsigned int occ, unocc, i;
-	unsigned int tagdest[LENGTH(tags)];
+    Client *c;
+    unsigned int occ, unocc, i;
+    unsigned int tagdest[LENGTH(tags)];
 
-	occ = 0;
+    occ = 0;
 
-	for (c = selmon -> clients; c; c = c -> next) {
+    for (c = selmon -> clients; c; c = c -> next) {
         occ |= (1 << (ffs(c->tags)-1));
     }
 
-	unocc = 0;
+    unocc = 0;
 
-	for (i = 0; i < LENGTH(tags); ++i) {
-		while (unocc < i && (occ & (1 << unocc))) {
+    for (i = 0; i < LENGTH(tags); ++i) {
+        while (unocc < i && (occ & (1 << unocc))) {
             unocc++;
         }
 
-		if (occ & (1 << i)) {
-			tagdest[i] = unocc;
-			occ &= ~(1 << i);
-			occ |= 1 << unocc;
-		}
-	}
+        if (occ & (1 << i)) {
+            tagdest[i] = unocc;
+            occ &= ~(1 << i);
+            occ |= 1 << unocc;
+        }
+    }
 
-	for (c = selmon -> clients; c; c = c -> next) {
+    for (c = selmon -> clients; c; c = c -> next) {
         c -> tags = 1 << tagdest[ffs(c -> tags) -1];
     }
 
-	if (selmon -> sel) {
+    if (selmon -> sel) {
         selmon -> tagset[selmon -> seltags] = selmon -> sel -> tags;
     }
 
-	arrange(selmon);
+    arrange(selmon);
 }
 
 
@@ -3501,22 +3501,22 @@ void view(const Arg *arg) {
 
 
 void warp(const Client *c) {
-	int x, y;
+    int x, y;
 
-	if (!c) {
-		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon -> wx + selmon -> ww / 2, selmon -> wy + selmon -> wh / 2);
-		return;
-	}
+    if (!c) {
+        XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon -> wx + selmon -> ww / 2, selmon -> wy + selmon -> wh / 2);
+        return;
+    }
 
-	if (!getrootptr(&x, &y) ||
-	    (x > c -> x - c -> bw &&
-	     y > c -> y - c -> bw &&
-	     x < c -> x + c -> w + c -> bw * 2 &&
-	     y < c -> y + c -> h + c -> bw * 2) ||
-	    (y > c -> mon -> by && y < c -> mon -> by + bh) ||
-	    (c -> mon -> topbar && !y)) { return; }
+    if (!getrootptr(&x, &y) ||
+        (x > c -> x - c -> bw &&
+         y > c -> y - c -> bw &&
+         x < c -> x + c -> w + c -> bw * 2 &&
+         y < c -> y + c -> h + c -> bw * 2) ||
+        (y > c -> mon -> by && y < c -> mon -> by + bh) ||
+        (c -> mon -> topbar && !y)) { return; }
 
-	XWarpPointer(dpy, None, c -> win, 0, 0, 0, 0, c -> w / 2, c -> h / 2);
+    XWarpPointer(dpy, None, c -> win, 0, 0, 0, 0, c -> w / 2, c -> h / 2);
 }
 
 
