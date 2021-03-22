@@ -216,6 +216,7 @@ static int  applysizehints(Client *c, int *x, int *y, int *w, int *h, int intera
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
+static void attachbottom(Client *c);
 static void attachstack(Client *c);
 static void buttonpress(XEvent *e);
 static void checkotherwm();
@@ -1220,6 +1221,16 @@ void attachstack(Client *c) {
 }
 
 
+void attachbottom(Client *c) {
+	Client **tc;
+	c -> next = NULL;
+
+	for (tc = &c -> mon -> clients; *tc; tc = &(*tc) -> next);
+
+	*tc = c;
+}
+
+
 void swallow(Client *p, Client *c) {
 
     if (c -> noswallow || c -> isterminal) { return; }
@@ -2192,10 +2203,9 @@ void manage(Window w, XWindowAttributes *wa) {
         XRaiseWindow(dpy, c -> win);
     }
 
-    attach(c);
+    attachbottom(c);
     attachstack(c);
-    XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
-        (unsigned char *) &(c -> win), 1);
+    XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend, (unsigned char *) &(c -> win), 1);
     XMoveResizeWindow(dpy, c -> win, c -> x + 2 * sw, c -> y, c -> w, c -> h); /* some windows require this */
     setclientstate(c, NormalState);
 
@@ -2622,7 +2632,7 @@ void sendmon(Client *c, Monitor *m) {
     c -> mon = m;
     c -> tags = m -> tagset[m -> seltags]; /* assign tags of target monitor */
 
-    attach(c);
+    attachbottom(c);
     attachstack(c);
     focus(NULL);
     arrange(NULL);
@@ -3218,7 +3228,7 @@ int updategeom() {
                     m -> clients = c -> next;
                     detachstack(c);
                     c -> mon = mons;
-                    attach(c);
+                    attachbottom(c);
                     attachstack(c);
                 }
                 if (m == selmon) { selmon = mons; }
