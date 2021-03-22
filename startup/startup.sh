@@ -68,7 +68,7 @@ while true; do
 done &
 
 # Compositor #
-picom --experimental-backends -b
+picom -b
 
 # MISC #
 wmname LG3D
