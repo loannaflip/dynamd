@@ -42,8 +42,8 @@ endef
 
 
 # Flags
-CFLAGS   = -march=skylake -Os -pipe -I/usr/X11R6/include -I/usr/include/freetype2 -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=2 -DXINERAMA
-LDFLAGS  = -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb -lxcb-res
+CFLAGS   = -march=skylake -Os -pipe -I/usr/include/freetype2
+LDFLAGS  = -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb-res
 
 .PHONY: all
 
