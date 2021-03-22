@@ -11,6 +11,9 @@
 * libX11
 * xcb
 
+# NOTE
+The source code contains my personal configuration. If you want to use it make sure to look carefully in **`src/Makefile`** (specially *`CFLAGS`* & *`LDFLAGS`*) and **`src/config.h`**. If you don't want multiple monitors support, make sure to completely remove **XINERAMA**.
+
 ## Installation
 ```bash
 <superuser> make --jobs "$(nproc || printf '%s\n' 1)" install
