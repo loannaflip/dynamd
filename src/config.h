@@ -60,7 +60,7 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 
 /* Startup Script */
 static const char *const autostart[] = {
-    "sh", "-c", "/home/uniminin/dynamd/startup/startup.sh", NULL,
+    "sh", "-c", "/usr/src/dynamd/startup/startup.sh", NULL,
     NULL
 };
 
@@ -104,12 +104,8 @@ static const Layout layouts[] = {
 
 /* App Commands */
 static const char *alacritty[]  = { "alacritty", NULL };
-static const char *flameshot[]  = { "flameshot", "gui", NULL };
 static const char *dmenu[]      = { "dmenu_run", "-nb", "black", "-sb", "white", "-nf",
                                     "#858585", "-sf", "black", "-fn", "'MonoLisa-18'", NULL };
-static const char *rofi[]       = { "rofi", "-modi", "drun", "-show", "drun", "-theme",
-                                    "sidetab", "-matching", "fuzzy", NULL };
-static const char *pcmanfm[]    = { "pcmanfm", NULL };
 
 
 /* Keybindings */
@@ -117,10 +113,7 @@ static Key keys[] = {
     /* Modifier                 Key         Function        Argument           */
     /* Apps */
     { SUPER,                    XK_Return,  spawn,          { .v = alacritty } },
-    { SUPER,                    XK_space,   spawn,          { .v = flameshot } },
     { SUPER,                    XK_d,       spawn,          { .v = dmenu } },
-    { SUPER,                    XK_r,       spawn,          { .v = rofi } },
-    { SUPER,                    XK_e,       spawn,          { .v = pcmanfm } },
 
     /* Window Focus */
     { SUPER,                    XK_Right,   focusstack,     { .i = +1 } },

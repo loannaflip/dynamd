@@ -42,7 +42,7 @@ endef
 
 
 # Flags
-CFLAGS   = -march=skylake -Os -pipe -I/usr/include/freetype2
+CFLAGS   = -march=skylake -O2 -pipe -I/usr/include/freetype2
 LDFLAGS  = -lX11 -lXinerama -lfontconfig -lXft -lX11-xcb -lxcb-res
 
 .PHONY: all
@@ -62,6 +62,7 @@ dynamd: ${OBJ}
 
 install: all uninstall
 	@ cp -f dynamd /usr/local/bin/
+	@ mkdir -p /usr/share/xsessions/
 	@ cp -f dynamd.desktop /usr/share/xsessions/
 	@ chmod 755 /usr/local/bin/dynamd
 	@ rm -f dynamd ${OBJ}
