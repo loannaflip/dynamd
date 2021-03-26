@@ -1,4 +1,4 @@
-/* 
+/*
 MIT/X Consortium License
 
 © 2006-2019 Anselm R Garbe <anselm@garbe.ca>
@@ -60,7 +60,7 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9",
 
 /* Startup Script */
 static const char *const autostart[] = {
-    "sh", "-c", "~/startup/startup.sh", NULL,
+    "sh", "-c", "~/dynamd/startup/startup.sh", NULL,
     NULL
 };
 

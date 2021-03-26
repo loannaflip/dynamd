@@ -1,4 +1,4 @@
-/* 
+/*
 MIT/X Consortium License
 
 © 2006-2019 Anselm R Garbe <anselm@garbe.ca>
